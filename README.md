@@ -3,7 +3,7 @@
 ## Base Project
 This project contains the base application for our labs. It consists of two parts: 
 
-1. A **client app** built using Angular
+1. A **client app** built using Angular. This project is 100% based on the example application called **Angular JumpStart** build by [Dan Wahlin](http://twitter.com/DanWahlin). The original project can be found on [this link](https://github.com/DanWahlin/Angular-JumpStart).
 2. A mock of a **REST API** that exposes some HTTP resources that can be used by the client application
 
 During this course you will use the **client app** and build your own **API** 
