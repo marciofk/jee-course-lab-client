@@ -110,7 +110,16 @@ a.navbar-brand {
 }
 
 .navbar .nav > li > a {
+
     color: white;
+    font-weight:bold;
+    height:30px;
+    padding-top: 6px;
+    padding-bottom: 0px;
+}
+
+.navbar .nav > li > p {
+    color: yellow;
     font-weight:bold;
     height:30px;
     padding-top: 6px;
