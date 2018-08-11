@@ -4,6 +4,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { ICustomer } from '../shared/interfaces';
 import { DataService } from '../core/services/data.service';
 
+
 @Component({
   selector: 'cm-customer-details',
   templateUrl: './customer-details.component.html',

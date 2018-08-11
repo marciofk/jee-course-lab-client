@@ -10,10 +10,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8090');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization, X-*');
   res.setHeader('Access-Control-Expose-Headers', '*');
   next();
 });
@@ -112,7 +112,7 @@ app.get('/api/states', (req, res) => {
 
 app.post('/api/auth/login', (req, res) => {
     var userLogin = req.body;
-    //Add "real" auth here. Simulating it by returning a simple boolean.
+    console.log(userLogin);
     res.json(true);
 });
 
@@ -120,6 +120,22 @@ app.post('/api/auth/logout', (req, res) => {
     res.json(true);
 });
 
-app.listen(3000);
+app.get('/api/config', function(req, res, next) {
+    res.statusCode = 401;
+    var e = new Error('Error');
+    next(e);
+});
 
-console.log('Express listening on port 3000.');
+app.get('/api/se', function(req, res, next) {
+    res.statusCode = 500;
+    var e = new Error('Error');
+    next(e);
+});
+
+app.get('/api/custom-about', (req, res) => {
+    res.send('<b>To be developed by the course participant</b>');
+});
+
+app.listen(8095);
+
+console.log('Express listening on port 8095.');

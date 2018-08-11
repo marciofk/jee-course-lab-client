@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -24,7 +24,16 @@ export class AuthService {
     }
 
     login(userLogin: IUserLogin): Observable<boolean> {
-        return this.http.post<boolean>(this.authUrl + '/login', userLogin)
+        const body = new HttpParams()
+            .set('email',userLogin.email)
+            .set('password',userLogin.password);
+
+        return this.http.post<boolean>(this.authUrl + '/login', body.toString(),
+                            {
+                               headers: new HttpHeaders()
+                                    .set('Content-type','application/x-www-form-urlencoded'),
+                                    withCredentials:true
+                            })
             .pipe(
                 map(loggedIn => {
                     this.isAuthenticated = loggedIn;

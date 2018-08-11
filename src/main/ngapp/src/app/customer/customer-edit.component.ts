@@ -8,12 +8,16 @@ import { ICustomer, IState } from '../shared/interfaces';
 import { GrowlerService, GrowlerMessageType } from '../core/growler/growler.service';
 import { LoggerService } from '../core/services/logger.service';
 
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'cm-customer-edit',
   templateUrl: './customer-edit.component.html',
   styleUrls: ['./customer-edit.component.css']
 })
 export class CustomerEditComponent implements OnInit {
+
+  imageResource : string = environment.localApiServer + "/api/image/state";
 
   customer: ICustomer =
     {

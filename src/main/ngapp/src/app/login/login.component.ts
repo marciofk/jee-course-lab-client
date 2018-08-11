@@ -7,6 +7,7 @@ import { ValidationService } from '../core/services/validation.service';
 import { IUserLogin } from '../shared/interfaces';
 import { GrowlerService, GrowlerMessageType } from '../core/growler/growler.service';
 import { LoggerService } from '../core/services/logger.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
     selector: 'cm-login',
@@ -16,20 +17,30 @@ import { LoggerService } from '../core/services/logger.service';
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     errorMessage: string;
+    visits: string;
 
     constructor(private formBuilder: FormBuilder,
                 private router: Router,
                 private authService: AuthService,
                 private growler: GrowlerService,
-                private logger: LoggerService) { }
+                private logger: LoggerService,
+                private cookieService: CookieService) { }
 
     ngOnInit() {
         this.buildForm();
     }
 
     buildForm() {
+
+        var emailValue:string;
+
+        emailValue = this.cookieService.get('email');
+        this.visits = this.cookieService.get('visits');
+
+        console.log('email: ' + emailValue);
+
         this.loginForm = this.formBuilder.group({
-            email:      ['', [ Validators.required, ValidationService.emailValidator ]],
+            email:      [emailValue, [ Validators.required, ValidationService.emailValidator ]],
             password:   ['', [ Validators.required, ValidationService.passwordValidator ]]
         });
     }

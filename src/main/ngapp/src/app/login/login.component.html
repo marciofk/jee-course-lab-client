@@ -1,7 +1,7 @@
 <div class="view">
     <div class="container">
         <header>
-            <h3><span class="glyphicon glyphicon-lock"></span> Login</h3>
+            <h3><span class="glyphicon glyphicon-lock"></span> Login </h3>
         </header>
         <br />
         <form [formGroup]="loginForm" (ngSubmit)="submit(loginForm)" class="login-form" novalidate>
@@ -42,6 +42,15 @@
                         <span class="glyphicon glyphicon-thumbs-down icon-white"></span>&nbsp;&nbsp;Error: {{ errorMessage }}
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="alert alert-info" role="alert">
+                            <p>Number of successful login attempts so far <span class="badge">{{ visits }}</span></p>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </form>
         

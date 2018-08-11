@@ -14,20 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-        <ng-param></ng-param>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>mock</id>
-            <activation>
-                <property>
-                    <name>ng-param</name>
-                    <value>--env=prod</value>
-                </property>
-            </activation>
-        </profile>
-    </profiles>
 
     <dependencies>
         <dependency>
@@ -91,7 +78,7 @@
                             <workingDirectory>${project.basedir}/src/main/ngapp</workingDirectory>
                             <executable>ng</executable>
                             <arguments>
-                                <argument>build ${ng-param}</argument>
+                                <argument>build</argument>
                             </arguments>
                         </configuration>
                         <goals>
