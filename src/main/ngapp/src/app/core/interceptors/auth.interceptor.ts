@@ -10,6 +10,7 @@ export class AuthInterceptor implements HttpInterceptor {
     // Get the auth header (fake value is shown here)
     const authHeader = '49a5kdkv409fd39'; // this.authService.getAuthHeader();
     const authReq = req.clone({headers: req.headers.set('Authorization', authHeader)});
+    console.log('auth interceptor');
     return next.handle(authReq);
   }
 }

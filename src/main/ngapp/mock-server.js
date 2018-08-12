@@ -32,11 +32,12 @@ app.get('/api/customers/page/:skip/:top', (req, res) => {
 
     var pagedCustomers = customers.slice(skip, top);
     res.setHeader('X-InlineCount', customers.length);
-    console.log('length: ' + customers.length);
+    console.log('called: GET /api/customers/page/:skip/:top');
     res.json(pagedCustomers);
 });
 
 app.get('/api/customers', (req, res) => {
+    console.log('called: GET /api/customers');
     res.json(customers);
 });
 
@@ -48,18 +49,18 @@ app.get('/api/customers/:id', (req, res) => {
            selectedCustomer = customer;
            break;
         }
-    }  
+    }
+    console.log('called: GET /api/customers/:id');
     res.json(selectedCustomer);
 });
 
 app.post('/api/customers', (req, res) => {
-    console.log("post on customers");
     let postedCustomer = req.body;
     let maxId = Math.max.apply(Math,customers.map((cust) => cust.id));
     postedCustomer.id = ++maxId;
     postedCustomer.gender = (postedCustomer.id % 2 === 0) ? 'female' : 'male';
     customers.push(postedCustomer);
-    console.log(JSON.stringify(customers));
+    console.log('called: POST /api/customers');
     res.json(postedCustomer);
 });
 
@@ -82,6 +83,7 @@ app.put('/api/customers/:id', (req, res) => {
             break;
         }
     }
+    console.log('called: PUT /api/customers');
     res.json({ status: status });
 });
 
@@ -92,7 +94,8 @@ app.delete('/api/customers/:id', function(req, res) {
            customers.splice(i,1);
            break;
         }
-    }  
+    }
+    console.log('called: DELETE /api/customers:id');
     res.json({ status: true });
 });
 
@@ -103,6 +106,7 @@ app.get('/api/orders/:id', function(req, res) {
             return res.json(cust);
         }
     }
+    console.log('called: GET /api/orders/:id');
     res.json([]);
 });
 
