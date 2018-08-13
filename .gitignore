@@ -16,7 +16,7 @@ log/
 target/
 
 # Auto-generated Angular resources
-src/main/webapp/
+#src/main/webapp/
 src/main/ngapp/package-lock.json
 src/main/ngapp/dist/
 src/main/ngapp/node_modules/

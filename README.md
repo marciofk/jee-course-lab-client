@@ -11,6 +11,7 @@ During this course, you will use the **client app** and build your own **API**
 ## Prerequisites
 * You must have an IDE to work with this project. We recommend using the IntelliJ IDEA Community Edition. This IDE has good integration with Maven and JUnit. [Download IntelliJ](https://www.jetbrains.com/idea/download/#section=mac)
 * You must have Node.js installed in your machine. You can use [this site](https://nodejs.org/en/download/) to install the latest Node.js. If you are already familiar with package management tools (e.g. brew, Yum, apt-get), feel free to use your preferred tool.
+* You must have Angular CLI installed in your machine. You can use the command `npm install -g @angular/cli`
 
 ## Installation 
 
