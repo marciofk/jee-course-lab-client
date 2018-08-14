@@ -95,6 +95,10 @@ MIT
 MIT
 MIT
 
+angular-webstorage-service@1.0.2
+MIT
+MIT
+
 ngx-cookie-service@1.0.10
 MIT
 MIT

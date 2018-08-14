@@ -1,5 +1,5 @@
 import { Injectable, Output, EventEmitter } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -28,17 +28,26 @@ export class AuthService {
             .set('email',userLogin.email)
             .set('password',userLogin.password);
 
+        var authorization:string;
+
         return this.http.post<boolean>(this.authUrl + '/login', body.toString(),
                             {
                                headers: new HttpHeaders()
                                     .set('Content-type','application/x-www-form-urlencoded'),
-                                    withCredentials:true
+                                    withCredentials:true,
+                                    observe: 'response'
                             })
             .pipe(
-                map(loggedIn => {
-                    this.isAuthenticated = loggedIn;
-                    this.userAuthChanged(loggedIn);
-                    return loggedIn;
+                map(res => {
+                    authorization = res.headers.get('Authorization');
+                    this.isAuthenticated = res.body as boolean;
+                    this.userAuthChanged(res.body as boolean);
+                    console.log("authenticated? " + this.isAuthenticated +
+                        " Authorization: " + authorization);
+
+                    localStorage.setItem("token",authorization);
+
+                    return res.body as boolean;
                 }),
                 catchError(this.handleError)
             );

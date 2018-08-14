@@ -154,12 +154,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _core_core_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./core/core.module */ "./src/app/core/core.module.ts");
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./shared/shared.module */ "./src/app/shared/shared.module.ts");
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var angular_webstorage_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! angular-webstorage-service */ "./node_modules/angular-webstorage-service/bundles/angular-webstorage-service.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -178,7 +180,8 @@ var AppModule = /** @class */ (function () {
                 _login_login_module__WEBPACK_IMPORTED_MODULE_4__["LoginModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"],
                 _core_core_module__WEBPACK_IMPORTED_MODULE_5__["CoreModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"] // Shared (multi-instance) objects
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_6__["SharedModule"],
+                angular_webstorage_service__WEBPACK_IMPORTED_MODULE_8__["StorageServiceModule"]
             ],
             declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]],
             providers: [ngx_cookie_service__WEBPACK_IMPORTED_MODULE_7__["CookieService"]],
@@ -572,7 +575,8 @@ var AuthInterceptor = /** @class */ (function () {
     }
     AuthInterceptor.prototype.intercept = function (req, next) {
         // Get the auth header (fake value is shown here)
-        var authHeader = '49a5kdkv409fd39'; // this.authService.getAuthHeader();
+        var authHeader = localStorage.getItem("token") == null ? "none" : localStorage.getItem("token");
+        console.log("auth from the local storage" + authHeader);
         var authReq = req.clone({ headers: req.headers.set('Authorization', authHeader) });
         console.log('auth interceptor');
         return next.handle(authReq);
@@ -1176,15 +1180,21 @@ var AuthService = /** @class */ (function () {
         var body = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]()
             .set('email', userLogin.email)
             .set('password', userLogin.password);
+        var authorization;
         return this.http.post(this.authUrl + '/login', body.toString(), {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]()
                 .set('Content-type', 'application/x-www-form-urlencoded'),
-            withCredentials: true
+            withCredentials: true,
+            observe: 'response'
         })
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (loggedIn) {
-            _this.isAuthenticated = loggedIn;
-            _this.userAuthChanged(loggedIn);
-            return loggedIn;
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["map"])(function (res) {
+            authorization = res.headers.get('Authorization');
+            _this.isAuthenticated = res.body;
+            _this.userAuthChanged(res.body);
+            console.log("authenticated? " + _this.isAuthenticated +
+                " Authorization: " + authorization);
+            localStorage.setItem("token", authorization);
+            return res.body;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["catchError"])(this.handleError));
     };
     AuthService.prototype.logout = function () {

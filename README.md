@@ -23,6 +23,7 @@ During this course, you will use the **client app** and build your own **API**
 ### Starting the mock REST API
 
 * Go to the folder `src/main/ngapp`, where the Angular application is installed
+* If this is the first time you are running this application, run the command `npm install` before so that libraries/dependencies of the mock API will be downloaded.
 * Start the server using the command `node mock-server.js`. This command will start a Node.js express application at port 8095.
 * To check if the mock server is working properly, access the following address:
 	* [http://localhost:8095/api/customers/1](http://localhost:8095/api/customers/1)

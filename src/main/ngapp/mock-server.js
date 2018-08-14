@@ -10,18 +10,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
+
+
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8090');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
   res.setHeader('Access-Control-Allow-Methods', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization, X-*');
-  res.setHeader('Access-Control-Expose-Headers', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-*');
+  res.setHeader('Access-Control-Expose-Headers', 'Authorization');
   next();
 });
 
 app.get('/api/customers/page/:skip/:top', (req, res) => {
     const topVal = req.params.top,
           skipVal = req.params.skip,
-          skip = (isNaN(skipVal)) ? 0 : +skipVal;  
+          skip = (isNaN(skipVal)) ? 0 : +skipVal;
+
     let top = (isNaN(topVal)) ? 10 : skip + (+topVal);
 
     if (top > customers.length) {
@@ -115,6 +118,8 @@ app.get('/api/states', (req, res) => {
 });
 
 app.post('/api/auth/login', (req, res) => {
+    // Just a test
+    res.setHeader('Authorization', 'bearer 9999');
     var userLogin = req.body;
     console.log(userLogin);
     res.json(true);
