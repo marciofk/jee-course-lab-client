@@ -50,6 +50,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     redirectToLogin() {
+        localStorage.removeItem("token");
         this.router.navigate(['/login']);
     }
 

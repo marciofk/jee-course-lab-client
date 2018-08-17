@@ -865,6 +865,7 @@ var NavbarComponent = /** @class */ (function () {
         this.redirectToLogin();
     };
     NavbarComponent.prototype.redirectToLogin = function () {
+        localStorage.removeItem("token");
         this.router.navigate(['/login']);
     };
     NavbarComponent.prototype.setLoginLogoutText = function () {
